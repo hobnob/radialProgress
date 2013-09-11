@@ -1,31 +1,55 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <style type="text/css">
+            path {
+                fill: red;
+                stroke: green;
+            }
+        </style>
+        <title>SVG Progress Example</title>
     </head>
     <body>
         <progress id="prg" max="100" value="10"></progress>
-
-        <svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
-            <path id="myPath" transform="rotate(-90, 200, 200)" />
-        </svg>
         <script type="text/javascript">
-            var progress = document.getElementById('prg')
-            var radius   = 200
-            var percent  = progress.getAttribute('value') / progress.getAttribute('max')
-            var angle    = 360 * percent
+            radialProgress = function(element, radius) {
+                var path = null
+                var init = function() {
+                    var ns   = 'http://www.w3.org/2000/svg'
+                    var svg  = document.createElementNS(ns, 'svg');
+                    path     = document.createElementNS(ns, 'path')
 
-            
-            var x1 = parseInt(radius + 180*Math.cos(Math.PI*0/180))
-            var y1 = parseInt(radius + 180*Math.sin(Math.PI*0/180))
+                    svg.setAttribute('version', '1.1')
+                    svg.setAttribute('width', '400')
+                    svg.setAttribute('height', '400')
+                    svg.setAttribute('xmlns', ns)
 
-            var x2 = parseInt(radius + 180*Math.cos(Math.PI*angle/180))
-            var y2 = parseInt(radius + 180*Math.sin(Math.PI*angle/180))
+                    path.setAttributeNS(null, 'transform', 'rotate(-90,'+radius+','+radius+')')
 
-            var path = "M200,200  L" + x1 + "," + y1 + "  A180,180 0 0,1 " + x2 + "," + y2 + " z";
+                    element.parentNode.insertBefore(svg, element)
+                    svg.appendChild(path)
+                    element.style['display'] = 'none'
+                }
+                var calcPercent = function() {
+                    var percent  = element.getAttribute('value') / element.getAttribute('max')
+                    var angle    = 360 * percent
+                    
+                    var x1 = parseInt(radius + 180*Math.cos(Math.PI*0/180))
+                    var y1 = parseInt(radius + 180*Math.sin(Math.PI*0/180))
 
-            var elem = document.getElementById('myPath')
-            elem.setAttribute('d', path)
-            elem.setAttribute('fill', '#00ff00')
+                    var x2 = parseInt(radius + 180*Math.cos(Math.PI*angle/180))
+                    var y2 = parseInt(radius + 180*Math.sin(Math.PI*angle/180))
+
+                    var pathStr = 'M'+radius+','+radius+' L'+x1+','+y1+'  A180,180 0 0,1 '+x2+','+y2+' z';
+
+                    path.setAttributeNS(null, 'd', pathStr)
+                }
+
+                init()
+                calcPercent()
+            }
+
+            new radialProgress(document.getElementById('prg'), 200)
 
         </script>
     </body>
