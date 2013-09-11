@@ -3,14 +3,14 @@
 	<head>
         <style type="text/css">
             path {
-                fill: red;
                 stroke: green;
+                stroke-width:5px;
             }
         </style>
         <title>SVG Progress Example</title>
     </head>
     <body>
-        <progress id="prg" max="100" value="10"></progress>
+        <progress id="prg" max="100" value="50"></progress>
         <script type="text/javascript">
             radialProgress = function(element, radius) {
                 var path = null
@@ -20,11 +20,12 @@
                     path     = document.createElementNS(ns, 'path')
 
                     svg.setAttribute('version', '1.1')
-                    svg.setAttribute('width', '400')
-                    svg.setAttribute('height', '400')
+                    svg.setAttribute('width', radius*2)
+                    svg.setAttribute('height', radius*2)
                     svg.setAttribute('xmlns', ns)
 
                     path.setAttributeNS(null, 'transform', 'rotate(-90,'+radius+','+radius+')')
+                    path.setAttributeNS(null, 'fill', 'transparent')
 
                     element.parentNode.insertBefore(svg, element)
                     svg.appendChild(path)
@@ -40,7 +41,7 @@
                     var x2 = parseInt(radius + 180*Math.cos(Math.PI*angle/180))
                     var y2 = parseInt(radius + 180*Math.sin(Math.PI*angle/180))
 
-                    var pathStr = 'M'+radius+','+radius+' L'+x1+','+y1+'  A180,180 0 0,1 '+x2+','+y2+' z';
+                    var pathStr = 'M'+x1+','+y1+' L'+x1+','+y1+'  A180,180 0 0,1 '+x2+','+y2;
 
                     path.setAttributeNS(null, 'd', pathStr)
                 }
@@ -49,7 +50,7 @@
                 calcPercent()
             }
 
-            new radialProgress(document.getElementById('prg'), 200)
+            new radialProgress(document.getElementById('prg'), 100)
 
         </script>
     </body>
