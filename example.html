@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    </head>
+    <body>
+        <progress id="prg" max="100" value="10"></progress>
+
+        <svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+            <path id="myPath" transform="rotate(-90, 200, 200)" />
+        </svg>
+        <script type="text/javascript">
+            var progress = document.getElementById('prg')
+            var radius   = 200
+            var percent  = progress.getAttribute('value') / progress.getAttribute('max')
+            var angle    = 360 * percent
+
+            
+            var x1 = parseInt(radius + 180*Math.cos(Math.PI*0/180))
+            var y1 = parseInt(radius + 180*Math.sin(Math.PI*0/180))
+
+            var x2 = parseInt(radius + 180*Math.cos(Math.PI*angle/180))
+            var y2 = parseInt(radius + 180*Math.sin(Math.PI*angle/180))
+
+            var path = "M200,200  L" + x1 + "," + y1 + "  A180,180 0 0,1 " + x2 + "," + y2 + " z";
+
+            var elem = document.getElementById('myPath')
+            elem.setAttribute('d', path)
+            elem.setAttribute('fill', '#00ff00')
+
+        </script>
+    </body>
+</html>
