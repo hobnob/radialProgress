@@ -10,7 +10,7 @@
         <title>SVG Progress Example</title>
     </head>
     <body>
-        <progress id="prg" max="100" value="50"></progress>
+        <progress id="prg" max="100" value="0"></progress>
         <script type="text/javascript">
             radialProgress = function(element, radius) {
                 var outline  = null
@@ -86,6 +86,8 @@
                 }
             }
 
+            var progress = new radialProgress(document.getElementById('prg'), 200)
+            setInterval(function(){progress.setValue(progress.getValue()+0.5);}, 100)
         </script>
     </body>
 </html>
