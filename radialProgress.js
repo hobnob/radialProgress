@@ -4,6 +4,25 @@ hobnob.radialProgress = function(element, radius) {
     var pie      = null
     var full     = null
     var diameter = radius * 2
+    var max      = 0
+    var self     = this
+
+    this.getValue = function() {
+        return parseFloat(element.getAttribute('value'))
+    }
+
+    this.setMax = function(max) {
+        element.setAttribute('max', parseFloat(max))
+        calcPie()
+    }
+
+    this.getMax = function() {
+        return parseFloat(element.getAttribute('max'))
+    }
+
+    this.getPercent = function() {
+        return this.getValue() / this.getMax()
+    }
 
     var init = function() {
         var ns        = 'http://www.w3.org/2000/svg'
@@ -43,8 +62,8 @@ hobnob.radialProgress = function(element, radius) {
         svg.appendChild(outline)
         element.style['display'] = 'none'
     }
-    var calcPercent = function() {
-        var percent  = element.getAttribute('value') / element.getAttribute('max')
+    var calcPie = function() {
+        var percent  = self.getPercent()
 
         if (percent >= 1) percent = 0.99999
 
@@ -61,14 +80,10 @@ hobnob.radialProgress = function(element, radius) {
     }
 
     init()
-    calcPercent()
+    calcPie()
 
     this.setValue = function(val) {
         element.setAttribute('value', parseFloat(val))
-        calcPercent()
-    }
-
-    this.getValue = function() {
-        return parseFloat(element.getAttribute('value'))
+        calcPie()
     }
 }
