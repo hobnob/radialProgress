@@ -21,7 +21,10 @@ hobnob.radialProgress = function(element, radius) {
     }
 
     this.getPercent = function() {
-        return this.getValue() / this.getMax()
+        var percent = this.getValue() / this.getMax()
+        if (percent > 1) percent = 1
+
+        return (percent * 100)
     }
 
     var init = function() {
@@ -63,7 +66,7 @@ hobnob.radialProgress = function(element, radius) {
         element.style['display'] = 'none'
     }
     var calcPie = function() {
-        var percent  = self.getPercent()
+        var percent  = (self.getPercent() / 100)
 
         if (percent >= 1) percent = 0.99999
 

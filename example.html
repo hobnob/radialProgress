@@ -2,6 +2,15 @@
 <html>
 	<head>
         <style type="text/css">
+            #percent {
+                position:absolute;
+                top:74px;
+                left:44px;
+                text-align: center;
+                display:block;
+                width:100px;
+                font-size: 32px;
+            }
             svg {
                 width:200px;
                 height:200px;
@@ -26,10 +35,14 @@
         <script type="text/javascript" src="radialProgress.js"></script>
     </head>
     <body>
-        <progress id="prg" max="100" value="0"></progress>
+        <progress id="prg" max="100" value="0"><span id="percent">0%</span></progress>
         <script type="text/javascript">
             var progress = new hobnob.radialProgress(document.getElementById('prg'), 200)
-            setInterval(function(){progress.setValue(progress.getValue()+0.5);}, 100)
+            document.getElementsByTagName('body')[0].appendChild(document.getElementById('percent'))
+            setInterval(function(){
+                progress.setValue(progress.getValue()+0.5);
+                document.getElementById('percent').innerHTML = Math.round(progress.getPercent())+'%'
+            }, 100)
         </script>
     </body>
 </html>
