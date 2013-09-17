@@ -4,6 +4,7 @@ hobnob.radialProgress = function(element, radius) {
     var pie      = null
     var full     = null
     var diameter = radius * 2
+    var circumference = Math.PI * diameter
     var max      = 0
     var self     = this
 
@@ -31,7 +32,7 @@ hobnob.radialProgress = function(element, radius) {
         var ns        = 'http://www.w3.org/2000/svg'
         var svg       = document.createElementNS(ns, 'svg')
         var transform = 'rotate(-90,'+radius+','+radius+')'
-        outline       = document.createElementNS(ns, 'path')
+        outline       = document.createElementNS(ns, 'circle')
         pie           = document.createElementNS(ns, 'path')
         circle        = document.createElementNS(ns, 'circle')
 
@@ -50,10 +51,15 @@ hobnob.radialProgress = function(element, radius) {
         pie.setAttributeNS(null, 'transform', transform)
         pie.setAttributeNS(null, 'fill', '#00ff00')
 
+        outline.setAttributeNS(null, 'r', radius)
+        outline.setAttributeNS(null, 'cx', radius)
+        outline.setAttributeNS(null, 'cy', radius)
         outline.setAttributeNS(null, 'transform', transform)
         outline.setAttributeNS(null, 'fill', 'transparent')
         outline.setAttributeNS(null, 'stroke-width', '6')
         outline.setAttributeNS(null, 'stroke', '#aaffaa')
+        outline.setAttributeNS(null, 'stroke-dasharray', circumference+' '+circumference)
+        outline.setAttributeNS(null, 'stroke-dashoffset', circumference)
 
         circle.setAttributeNS(null, 'class', 'radial-innerCircle')
         pie.setAttributeNS(null, 'class', 'radial-pieSegment')
@@ -76,10 +82,10 @@ hobnob.radialProgress = function(element, radius) {
         var x2    = parseFloat(radius + (radius*Math.cos(Math.PI*angle/180)))
         var y2    = parseFloat(radius + (radius*Math.sin(Math.PI*angle/180)))
 
-        var outlineStr = 'M'+x1+','+y1+' L'+x1+','+y1+'  A'+radius+','+radius+' 0 '+(percent > 0.5 ? 1 : 0)+',1 '+x2+','+y2;
-        outline.setAttributeNS(null, 'd', outlineStr)
         var pieStr = 'M'+radius+','+radius+' L'+x1+','+y1+'  A'+radius+','+radius+' 0 '+(percent > 0.5 ? 1 : 0)+',1 '+x2+','+y2+' z';
         pie.setAttributeNS(null, 'd', pieStr)
+
+        outline.setAttributeNS(null, 'stroke-dashoffset', circumference - (circumference * percent))
     }
 
     init()

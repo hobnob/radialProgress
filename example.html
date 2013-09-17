@@ -29,6 +29,7 @@
             .radial-outerPath {
                 stroke: pink;
                 stroke-width:11;
+                transition: all 2s;
             }
         </style>
         <title>SVG Progress Example</title>
@@ -39,10 +40,10 @@
         <script type="text/javascript">
             var progress = new hobnob.radialProgress(document.getElementById('prg'), 200)
             document.getElementsByTagName('body')[0].appendChild(document.getElementById('percent'))
-            setInterval(function(){
-                progress.setValue(progress.getValue()+0.5);
+            setTimeout(function(){
+                progress.setValue(progress.getValue()+25);
                 document.getElementById('percent').innerHTML = Math.round(progress.getPercent())+'%'
-            }, 100)
+            }, 1000)
         </script>
     </body>
 </html>
