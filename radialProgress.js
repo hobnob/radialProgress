@@ -88,7 +88,7 @@ hobnob.radialProgress = function(element, radius) {
         outline.setAttributeNS(null, 'stroke-dashoffset', circumference - (circumference * percent))
     }
 
-    init()
+    element != undefined && element.nodeType === 1 && init()
     calcPie()
 
     this.setValue = function(val) {
