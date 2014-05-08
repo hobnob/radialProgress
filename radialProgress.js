@@ -70,6 +70,7 @@ hobnob.radialProgress = function(element, radius) {
         svg.appendChild(pie)
         svg.appendChild(outline)
         element.style['display'] = 'none'
+        calcPie()
     }
     var calcPie = function() {
         var percent  = (self.getPercent() / 100)
@@ -89,7 +90,6 @@ hobnob.radialProgress = function(element, radius) {
     }
 
     element != undefined && element.nodeType === 1 && init()
-    calcPie()
 
     this.setValue = function(val) {
         element.setAttribute('value', parseFloat(val))
