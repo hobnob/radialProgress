@@ -72,6 +72,7 @@ hobnob.radialProgress = function(element, radius) {
         element.style['display'] = 'none'
         calcPie()
     }
+
     var calcPie = function() {
         var percent  = (self.getPercent() / 100)
 
